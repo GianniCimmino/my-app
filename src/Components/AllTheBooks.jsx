@@ -6,7 +6,7 @@ function SingleBook({book}) {
     const [selected, setSelected] = useState(false);
 
   return (
-    <Col xs={4} className="d-flex">
+    <Col xs={6} md={4} lg={2} className="d-flex">
     <Card
       onClick={() => setSelected(!selected)}
       className="flex-grow-1"

@@ -6,7 +6,7 @@ function Welcome() {
       <Alert.Heading>Hey, piacere di vederti</Alert.Heading>
       <p>
         Benvenuto nella mia applicazione.
-        Qui troverete una lista di libri.
+        Qui troverai una lista di libri.
       </p>
     </Alert>
   );

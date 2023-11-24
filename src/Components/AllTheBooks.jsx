@@ -1,50 +1,35 @@
-import {Card, Col, Container, Form, Image, Row } from "react-bootstrap";
-import books from "../Data/horror.json";
+import { Col, Row } from "react-bootstrap";
+import fantasy from "../Data/horror.json";
+import SingleBook from "./SingleBook";
+import CommentArea from "./CommentArea";
 import { useState } from "react";
-
-function SingleBook({book}) {
-    const [selected, setSelected] = useState(false);
+const AllTheBooks = ({ searchQuery }) => {
+  const [selected, setSelected] = useState(false);
 
   return (
-    <Col xs={6} md={4} lg={2} className="d-flex">
-    <Card
-      onClick={() => setSelected(!selected)}
-      className="flex-grow-1"
-      style={{
-        outline: selected ? "3px solid red" : "3px solid transparent",
-        margin: "-3px",
-      }}
-    >
-      <Card.Img variant="top" src={book.img} />
-      <Card.Body>
-        <Card.Title>{book.title}</Card.Title>
-        <Card.Text>{book.price}</Card.Text>
-      </Card.Body>
-    </Card>
-    </Col>
+    <Row>
+      <Col md={8}>
+        <Row className="g-2 mt-3">
+          {fantasy
+            .filter((b) => b.title.toLowerCase().includes(searchQuery))
+            .map((book) => {
+              return (
+                <Col xs={12} md={4} key={book.asin}>
+                  <SingleBook
+                    book={book}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                </Col>
+              );
+            })}
+        </Row>
+      </Col>
+      <Col md={4}>
+        <CommentArea asin={selected} />
+      </Col>
+    </Row>
   );
-}
+};
 
-export default function AllTheBooks(){
-    const [query, setQuery] = useState("");
-    
-    const booksByQuery = (book) => book.title.toLowerCase().includes(query.toLowerCase());
-
-    return (
-        <Container>
-      <Form.Group className="py-4">
-        <Form.Label>Search</Form.Label>
-        <Form.Control
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </Form.Group>
-      <Row className="row-gap-3">
-        {books.filter(booksByQuery).map((book) => (
-          <SingleBook book={book} />
-        ))}
-      </Row>
-    </Container>
-  );
-}
+export default AllTheBooks;

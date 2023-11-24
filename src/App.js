@@ -1,17 +1,30 @@
-import Navbar from "./Components/MyNav.jsx";
-import Footer from "./Components/MyFooter.jsx";
-import Welcome from "./Components/Welcome.jsx";
-import AllTheBooks from "./Components/AllTheBooks.jsx";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import MyNav from "./Components/MyNav";
+import MyFooter from "./Components/MyFooter";
+import Welcome from "./Components/Welcome";
+import AllTheBooks from "./Components/AllTheBooks";
+import { Container } from "react-bootstrap";
+import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NotFound from "./Components/NotFound.jsx";
+import BookDetails from "./Components/BookDetails";
 
 function App() {
+  const [searchQuery, setSearchQuery] = useState("");
   return (
-    <>
-      <Navbar />
-      <Welcome />
-      <AllTheBooks />
-      <hr></hr>
-      <Footer />
-    </>
+    <BrowserRouter>
+      <MyNav searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <Container>
+        <Welcome />
+        <Routes>
+          <Route path="/" element={<AllTheBooks searchQuery={searchQuery} />} />
+          <Route path="/details/:asin" element={<BookDetails />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Container>
+      <MyFooter />
+    </BrowserRouter>
   );
 }
 

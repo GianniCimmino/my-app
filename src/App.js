@@ -23,6 +23,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
+      <hr></hr>
       <MyFooter />
     </BrowserRouter>
   );
